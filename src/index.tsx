@@ -1,3 +1,5 @@
+import './index.css'
+
 type Props = {
     text: string
 }
@@ -5,6 +7,6 @@ type Props = {
 
 export const Welcome = ({ text }: Props) => {
     return (
-        <div>Welcome {text}!</div>
+        <div className="text-sky-800">Welcome {text}!</div>
     )
 }

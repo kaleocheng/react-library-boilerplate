@@ -1,8 +1,11 @@
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
+import postcss from 'rollup-plugin-postcss'
 import typescript from '@rollup/plugin-typescript'
+import css from 'rollup-plugin-import-css'
 import external from 'rollup-plugin-peer-deps-external'
 import dts from 'rollup-plugin-dts'
+
 
 const packageJson = require('./package.json')
 
@@ -23,14 +26,20 @@ export default [
         ],
         plugins: [
             external(),
+            postcss({
+                config: {
+                    path: './postcss.config.js'
+                },
+            }),
             resolve(),
             commonjs(),
-            typescript({ tsconfig: './tsconfig.json' })
+            typescript({ tsconfig: './tsconfig.json' },
+            )
         ]
     },
     {
-        input: 'dist/esm/types/index.d.ts',
+        input: 'dist/esm/index.d.ts',
         output: [{ file: 'dist/index.d.ts', format: 'esm' }],
-        plugins: [dts()]
+        plugins: [css(), dts()]
     }
 ]
